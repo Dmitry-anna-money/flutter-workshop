@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/// TODO: Add the http package.
+/// TODO: Fetch JSON from a REST API (e.g. JSONPlaceholder).
+/// TODO: Parse into Dart models.
+/// TODO: Display data in a list.
 void main() {
   runApp(App());
 }
