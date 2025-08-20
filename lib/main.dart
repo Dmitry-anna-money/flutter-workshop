@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// TODO: Build a list using ListView.
-/// TODO: Navigate to a details screen.
-/// TODO: Pass parameters between screens.
 void main() {
   runApp(App());
 }
@@ -13,7 +10,12 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: HomePage(),
+      initialRoute: '/home',
+      onGenerateRoute: (settings) => switch (settings.name) {
+        '/home' => MaterialPageRoute(builder: (context) => const HomePage()),
+        '/details' => MaterialPageRoute(builder: (context) => DetailsPage(settings.arguments as int)),
+        _ => null,
+      },
     );
   }
 }
@@ -26,6 +28,36 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home'),
+      ),
+      body: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) => ListTile(
+          title: Text('Item $index'),
+          subtitle: Text('Click to view details'),
+          onTap: () => onClick(context, index),
+        ),
+      ),
+    );
+  }
+
+  void onClick(BuildContext context, int id) {
+    Navigator.pushNamed(context, '/details', arguments: id);
+  }
+}
+
+class DetailsPage extends StatelessWidget {
+  final int id;
+
+  const DetailsPage(this.id, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Details'),
+      ),
+      body: Center(
+        child: Text('Item $id'),
       ),
     );
   }
