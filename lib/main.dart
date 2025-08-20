@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// TODO: Build a list using ListView.
+/// TODO: Navigate to a details screen.
+/// TODO: Pass parameters between screens.
 void main() {
   runApp(App());
 }
@@ -15,16 +18,8 @@ class App extends StatelessWidget {
   }
 }
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int counter = 0;
-  String buttonText = 'Click me!';
 
   @override
   Widget build(BuildContext context) {
@@ -32,26 +27,6 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 16,
-          children: [
-            Text('Hello, Flutter!'),
-            ElevatedButton(
-              onPressed: () => onClick(),
-              child: Text(buttonText),
-            ),
-          ],
-        ),
-      ),
     );
-  }
-
-  void onClick() {
-    setState(() {
-      counter++;
-      buttonText = 'Clicked! ($counter)';
-    });
   }
 }
