@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_workshop/user_api.dart';
 
-/// TODO: Add the http package.
-/// TODO: Fetch JSON from a REST API (e.g. JSONPlaceholder).
-/// TODO: Parse into Dart models.
-/// TODO: Display data in a list.
 void main() {
   runApp(App());
 }
@@ -33,13 +30,28 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Home'),
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) => ListTile(
-          title: Text('Item $index'),
-          subtitle: Text('Click to view details'),
-          onTap: () => onClick(context, index),
-        ),
+      body: FutureBuilder(
+        future: UserApi().getUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) => ListTile(
+                title: Text(snapshot.data![index].name),
+                subtitle: Text(snapshot.data![index].email),
+                onTap: () => onClick(context, snapshot.data![index].id),
+              ),
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
@@ -60,8 +72,36 @@ class DetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Details'),
       ),
-      body: Center(
-        child: Text('Item $id'),
+      body: FutureBuilder(
+        future: UserApi().getUser(id),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView(
+              children: [
+                ListTile(
+                  title: Text('Id'),
+                  subtitle: Text(snapshot.data!.id.toString()),
+                ),
+                ListTile(
+                  title: Text('Name'),
+                  subtitle: Text(snapshot.data!.name),
+                ),
+                ListTile(
+                  title: Text('Email'),
+                  subtitle: Text(snapshot.data!.email),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        },
       ),
     );
   }
