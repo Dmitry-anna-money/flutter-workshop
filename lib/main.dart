@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_workshop/user_api.dart';
 
+/// - TODO: Add notes (FloatingActionButton)
+/// - TODO: Edit note (TextField)
+/// - TODO: (Optional) Delete note (Button, showDialog for confirm)
+/// - TODO: (Optional) Save with shared_preferences
 void main() {
   runApp(App());
 }
