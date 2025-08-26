@@ -19,6 +19,7 @@ class DetailsPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView(
+              padding: EdgeInsets.all(16),
               children: [
                 TextField(
                   controller: controller..text = snapshot.data!.text,
